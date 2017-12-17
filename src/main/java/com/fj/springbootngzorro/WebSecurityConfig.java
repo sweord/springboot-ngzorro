@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().regexMatchers(".*\\.js", ".*\\.css", ".*\\.ico", ".*\\.woff2");
+        web.ignoring().regexMatchers(".*\\.js", ".*\\.js.map", ".*\\.html", ".*\\.css", ".*\\.ico", ".*\\.woff2");
     }
 
     @Autowired
