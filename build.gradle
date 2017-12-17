@@ -1,0 +1,71 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.8.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.moowork.node'
+
+group = 'com.fj'
+version = '1.0'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('com.h2database:h2')
+//    compile('mysql:mysql-connector-java')
+//    compile('com.alibaba:druid-spring-boot-starter')
+    compile('org.projectlombok:lombok')
+    compile('com.google.code.gson:gson')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+node {
+    version = "6.11.5"
+//    download = true
+    nodeModulesDir = file("frontend")
+}
+
+//task buildClientDev(type: NpmTask, dependsOn: 'npmInstall') {
+task buildClientDev(type: NpmTask) {
+    group = 'build'
+    description = 'Compile client side folder for development'
+    args = ['run', 'buildDev']
+}
+
+//task buildClient(type: NpmTask, dependsOn: 'npmInstall') {
+task buildClientProd(type: NpmTask) {
+    group = 'build'
+    description = "Compile client side folder for production"
+    args = ['run', 'buildProd']
+}
+
+//task buildClientWatch(type: NpmTask, dependsOn: 'npmInstall') {
+task buildClientWatch(type: NpmTask) {
+    group = 'application'
+    description = "Build and watches the client side assets for rebuilding"
+    args = ['run', 'buildWatch']
+}
+
+//bootRun.dependsOn(buildClientDev)
+
+//jar.dependsOn(buildClient)
