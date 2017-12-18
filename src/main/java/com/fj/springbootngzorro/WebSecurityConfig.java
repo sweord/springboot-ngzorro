@@ -1,4 +1,4 @@
-package com.fj.springbootangular4;
+package com.fj.springbootngzorro;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().regexMatchers(".*\\.js", ".*\\.js.map", ".*\\.html", ".*\\.css", ".*\\.ico", ".*\\.woff2");
+        web.ignoring().regexMatchers(".*\\.js", ".*\\.js.map", ".*\\.css", ".*\\.ico", ".*\\.woff2");
     }
 
     @Autowired
