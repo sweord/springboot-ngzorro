@@ -1,6 +1,9 @@
 package com.fj.springbootngzorro;
 
+import com.fj.entity.Media;
+import com.fj.service.MediaService;
 import org.h2.store.fs.FilePath;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,9 @@ import java.nio.file.Paths;
 
 @Controller
 public class FileUploadController {
+
+    @Autowired
+    MediaService mediaService;
 
     @PostMapping("/uploadFile")
     @ResponseBody
@@ -38,6 +44,11 @@ public class FileUploadController {
                     new BufferedOutputStream(new FileOutputStream(new File(filePath)));
             stream.write(uploadFile.getBytes());
             stream.close();
+
+            Media media = new Media();
+            media.setSize((int)uploadFile.getSize());
+            media.setStorePath(filePath);
+            mediaService.saveMedia(media);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
